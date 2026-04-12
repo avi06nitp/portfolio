@@ -136,23 +136,38 @@ export default function Hero() {
                 </div>
               </div>
 
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                I design and build reliable, secure, high-performance distributed systems, microservices, and end-to-end platforms that scale with evolving business needs. My expertise spans hands-on development, system architecture, and managing the complete software development lifecycle, with a strong emphasis on scalability, security, and operational excellence. I work extensively with cloud and data platforms such as AWS, Databricks, and big data ecosystems, and have experience setting up streamlined CI/CD practices to support fast, consistent, and reliable software delivery.
+
+              <p className="text-base border-l-2 border-primary pl-4 italic text-muted-foreground max-w-xl mx-auto lg:mx-0">
+                I experiment, I go deep, and I care about the last mile, the thing that actually reaches the user.
+              </p>
+
+              <p className="text-lg text-muted-foreground leading-relaxed max-w-xl mx-auto lg:mx-0">
+                I got into software because I believe engineering could shape how people live and work.
+                3+ years in, I've architected data governance platforms at Visa and shipped customer infrastructure
+                at PhonePe that transform how millions of user interact with our products. I'm most alive when I'm at the intersection
+                of a hard technical problem and a real business decision,  figuring out not just how to build it,
+                but why it matters.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-4">
-                <Button size="lg" className="group bg-primary hover:bg-primary/90 text-primary-foreground">
-                  <Download className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                  Download Resume
-                </Button>
-                <Button variant="outline" size="lg" className="group border-muted-foreground hover:bg-muted hover:text-muted-foreground">
-                  <Github className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                  View GitHub
-                </Button>
-                <Button variant="outline" size="lg" className="group border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white">
-                  <Linkedin className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
-                  Connect on LinkedIn
-                </Button>
+                <a href="/AvinashS_Resume.pdf" download="AvinashS_Resume.pdf">
+                  <Button size="lg" className="group bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto">
+                    <Download className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                    Download Resume
+                  </Button>
+                </a>
+                <a href="https://github.com/avi06nitp" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="lg" className="group border-muted-foreground hover:bg-muted hover:text-muted-foreground w-full sm:w-auto">
+                    <Github className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                    View GitHub
+                  </Button>
+                </a>
+                <a href="https://www.linkedin.com/in/avinash2001/" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="lg" className="group border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white w-full sm:w-auto">
+                    <Linkedin className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform" />
+                    Connect on LinkedIn
+                  </Button>
+                </a>
               </div>
             </div>
 

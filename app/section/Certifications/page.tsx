@@ -1,46 +1,58 @@
 "use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/app/components/ui/card";
 import { Badge } from "@/app/components/ui/badge";
-import {
-  Award,
-  Database,
-  Server,
-  Zap,
-} from "lucide-react";
+import { Button } from "@/app/components/ui/button";
+import { ExternalLink, BookOpen } from "lucide-react";
 
-const CERTIFICATIONS = [
+const EARNED_CERTIFICATIONS = [
   {
-    title: "AWS Solutions Architect",
-    level: "Associate Level",
-    description: "Advanced cloud architecture design, security, and scalability best practices",
-    skills: ["EC2", "Lambda", "RDS", "CloudFormation"],
-    color: "from-orange-400 to-red-500",
-    icon: Award
+    title: "Databricks Certified Data Engineer Associate",
+    issuer: "Databricks",
+    date: "October 2025",
+    logo: "https://cdn.simpleicons.org/databricks/FF3621",
+    credentialUrl: "https://credentials.databricks.com/26d26904-7855-4ea4-9623-a8a65f24b9e3#acc.gvrHTwBu",
+    skills: ["Delta Lake", "Apache Spark", "Unity Catalog", "Delta Live Tables", "Lakehouse Federation"]
   },
   {
-    title: "AWS Data Engineer",
-    level: "Associate Level",
-    description: "Data pipeline design, ETL processes, and big data analytics on AWS",
-    skills: ["Kinesis", "Glue", "Redshift", "EMR"],
-    color: "from-blue-400 to-cyan-500",
-    icon: Database
+    title: "AI Agent Fundamentals",
+    issuer: "Databricks",
+    date: "October 2025",
+    logo: "https://cdn.simpleicons.org/databricks/FF3621",
+    credentialUrl: "https://credentials.databricks.com/cf7c7d02-7290-44bc-ab47-f34dbdb2894f",
+    skills: ["LLM Agents", "MCP Servers", "Tool Use", "AI Orchestration", "RAG"]
   },
   {
-    title: "Databricks Data Engineer",
-    level: "Professional Certification",
-    description: "Apache Spark, Delta Lake, and unified analytics platform expertise",
-    skills: ["Spark", "Delta Lake", "MLflow", "Databricks SQL"],
-    color: "from-red-400 to-pink-500",
-    icon: Zap
+    title: "Redis for Java Developers",
+    issuer: "Redis University",
+    date: "January 2026",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg",
+    credentialUrl: "https://university.redis.io/certificate/gbpiqxj9uoxzex",
+    skills: ["Redis Clustering", "TTL Invalidation", "Caching Strategies", "Java Redis Client", "Pub/Sub"]
+  }
+];
+
+const PURSUING_CERTIFICATIONS = [
+  {
+    title: "AWS Certified Developer – Associate",
+    issuer: "Amazon Web Services",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
+    description: "Extensive production experience with AWS developer services — Lambda, ECS/EKS, EventBridge, SNS/SQS, CloudWatch, and CI/CD integrations. Applying these daily at Visa while working through structured exam preparation.",
+    skills: ["AWS Lambda", "ECS/EKS", "EventBridge", "SNS/SQS", "CloudWatch", "CloudFormation"]
   },
   {
-    title: "Linux Foundation",
-    level: "Certified Systems Administrator",
-    description: "Advanced Linux system administration, security, and performance tuning",
-    skills: ["Shell Scripting", "Security", "Networking", "Performance"],
-    color: "from-green-400 to-emerald-500",
-    icon: Server
+    title: "AWS Certified Solutions Architect – Associate",
+    issuer: "Amazon Web Services",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg",
+    description: "Actively designing and operating cloud-native systems at scale — spanning compute, networking, storage, and security services across AWS. Focused exam preparation running in parallel with production cloud work.",
+    skills: ["EC2", "ALB/ASG", "S3", "IAM", "VPC", "Lake Formation", "Athena", "Glue"]
+  },
+  {
+    title: "Linux Foundation Certified System Administrator",
+    issuer: "Linux Foundation",
+    logo: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg",
+    description: "Daily Linux usage across production environments for system administration, shell scripting, process management, and security hardening. Preparing to formally validate hands-on expertise built through years of real-world use.",
+    skills: ["Shell Scripting", "Process Management", "Networking", "Security Hardening", "File Systems", "Systemd"]
   }
 ];
 
@@ -49,64 +61,92 @@ export default function Certifications() {
     <section id="certifications" className="py-20 px-4 bg-muted/50">
       <div className="container mx-auto">
         <div className="text-center mb-16">
-        <h2 className="text-5xl font-bold mb-6 bg-gradient-to-r from-slate-900 to-slate-600 dark:from-slate-100 dark:to-slate-300 bg-clip-text text-transparent">
-          Professional Certifications
-        </h2>
-        <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-          Industry-recognized credentials demonstrating expertise in cloud architecture and data engineering
-        </p>
-      </div>
+          <h2 className="text-5xl font-bold mb-6 text-foreground">
+            Certifications
+          </h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Industry-recognized credentials in cloud, data engineering, and AI platforms
+          </p>
+        </div>
 
+        {/* Earned Certifications */}
+        <div className="max-w-5xl mx-auto grid md:grid-cols-3 gap-6 mb-16">
+          {EARNED_CERTIFICATIONS.map((cert) => (
+            <Card key={cert.title} className="hover:shadow-md transition-shadow duration-300 flex flex-col">
+              <CardHeader className="pb-3">
+                <div className="flex items-center gap-3 mb-3">
+                  <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center overflow-hidden p-1.5">
+                    <img src={cert.logo} alt={cert.issuer} className="w-full h-full object-contain" />
+                  </div>
+                  <div>
+                    <p className="text-xs font-bold text-foreground/80 uppercase tracking-widest">{cert.issuer}</p>
+                    <p className="text-xs text-muted-foreground mt-0.5">{cert.date}</p>
+                  </div>
+                </div>
+                <CardTitle className="text-base font-bold leading-snug">{cert.title}</CardTitle>
+              </CardHeader>
+              <CardContent className="flex flex-col gap-4 flex-1">
+                <div className="flex flex-wrap gap-1.5">
+                  {cert.skills.map((skill) => (
+                    <Badge key={skill} variant="secondary" className="text-xs font-normal">
+                      {skill}
+                    </Badge>
+                  ))}
+                </div>
+                <div className="mt-auto pt-2">
+                  <a href={cert.credentialUrl} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" size="sm" className="w-full text-xs">
+                      <ExternalLink className="w-3 h-3 mr-1.5" />
+                      View Credential
+                    </Button>
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
 
-        <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
-          {CERTIFICATIONS.map((cert, index) => {
-            const IconComponent = cert.icon;
+        {/* Currently Pursuing */}
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center gap-2">
+              <BookOpen className="w-4 h-4 text-muted-foreground" />
+              <h3 className="text-lg font-semibold text-foreground">Currently Pursuing</h3>
+            </div>
+            <div className="flex-1 h-px bg-border" />
+            <span className="text-xs text-muted-foreground whitespace-nowrap">Exam-ready — actively preparing</span>
+          </div>
 
-            return (
-              <Card key={cert.title} className="group relative overflow-hidden hover:shadow-xl transition-all duration-500 hover:scale-105">
-                {/* Background gradient overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${cert.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
-
-                {/* Floating orb */}
-                <div className={`absolute -top-10 -right-10 w-24 h-24 bg-gradient-to-br ${cert.color} rounded-full opacity-20 group-hover:opacity-30 group-hover:scale-125 transition-all duration-500`}></div>
-
-                <CardHeader className="relative">
-                  <div className="flex items-center gap-4">
-                    <div className={`w-16 h-16 rounded-lg flex items-center justify-center transition-transform group-hover:scale-110 bg-gradient-to-r ${cert.color} shadow-lg`}>
-                      <IconComponent className="w-8 h-8 text-white" />
+          <div className="grid md:grid-cols-3 gap-6">
+            {PURSUING_CERTIFICATIONS.map((cert) => (
+              <Card key={cert.title} className="hover:shadow-md transition-shadow duration-300 border-dashed">
+                <CardHeader className="pb-3">
+                  <div className="flex items-center gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-secondary flex items-center justify-center overflow-hidden p-1.5">
+                      <img src={cert.logo} alt={cert.issuer} className="w-full h-full object-contain" />
                     </div>
-                    <div className="flex-1">
-                      <CardTitle className={`text-lg bg-gradient-to-r ${cert.color} bg-clip-text text-transparent font-bold`}>{cert.title}</CardTitle>
-                      <CardDescription className="text-base font-medium">
-                        {cert.level}
-                      </CardDescription>
+                    <div>
+                      <p className="text-xs font-bold text-foreground/80 uppercase tracking-widest">{cert.issuer}</p>
+                      <Badge variant="secondary" className="text-xs font-medium mt-1 px-1.5 py-0">In Progress</Badge>
                     </div>
                   </div>
+                  <CardTitle className="text-base font-bold leading-snug">{cert.title}</CardTitle>
                 </CardHeader>
-                <CardContent className="relative">
-                  <div className="space-y-4">
-                    <p className="text-muted-foreground text-sm leading-relaxed">
-                      {cert.description}
-                    </p>
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-medium text-foreground">Key Skills:</h4>
-                      <div className="flex flex-wrap gap-2">
-                        {cert.skills.map((skill) => (
-                          <Badge key={skill} className={`bg-gradient-to-r ${cert.color} text-white hover:scale-105 transition-all duration-300 text-xs shadow-md`}>
-                            {skill}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
+                <CardContent className="space-y-3">
+                  <p className="text-xs text-muted-foreground leading-relaxed">{cert.description}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {cert.skills.map((skill) => (
+                      <Badge key={skill} variant="outline" className="text-xs font-normal">
+                        {skill}
+                      </Badge>
+                    ))}
                   </div>
                 </CardContent>
-
-                {/* Bottom gradient line */}
-                <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${cert.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500`}></div>
               </Card>
-            );
-          })}
+            ))}
+          </div>
         </div>
+
       </div>
     </section>
   );

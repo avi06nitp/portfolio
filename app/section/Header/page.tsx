@@ -2,14 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { Button } from "@/app/components/ui/button";
-import { ThemeToggle } from "@/app/components/theme-toggle";
 import {
   Download,
   Github,
   Linkedin,
   Menu,
   X,
-  ExternalLink,
 } from "lucide-react";
 
 const NAVIGATION_ITEMS = [
@@ -32,7 +30,6 @@ export default function Header() {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
 
-      // Detect active section
       const sections = NAVIGATION_ITEMS.map(item => item.id);
       const currentSection = sections.find(section => {
         const element = document.getElementById(section);
@@ -116,45 +113,41 @@ export default function Header() {
 
             {/* Desktop Action Buttons */}
             <div className="hidden md:flex items-center space-x-4">
-              {/* Highlighted Resume Button */}
-              <Button
-                size="sm"
-                className="hidden lg:flex bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105 text-primary-foreground font-medium group"
-              >
-                <Download className="w-4 h-4 mr-2 group-hover:animate-bounce" />
-                Resume
-                <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-primary/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 -z-10 blur-sm" />
-              </Button>
+              <a href="/AvinashS_Resume.pdf" download="AvinashS_Resume.pdf">
+                <Button
+                  size="sm"
+                  className="hidden lg:flex bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary hover:shadow-lg hover:shadow-primary/25 transition-all duration-300 hover:scale-105 text-primary-foreground font-medium group"
+                >
+                  <Download className="w-4 h-4 mr-2 group-hover:animate-bounce" />
+                  Resume
+                </Button>
+              </a>
 
               <div className="flex items-center space-x-2">
-                {/* Enhanced GitHub Button */}
-                <Button
-                  variant="outline"
-                  size="icon"
-                  className="relative hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300 hover:scale-110 hover:shadow-md group overflow-hidden"
-                >
-                  <Github className="w-4 h-4 group-hover:rotate-12 transition-transform duration-300" />
-                  <ExternalLink className="w-2.5 h-2.5 absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-primary/5 translate-x-full group-hover:translate-x-0 transition-transform duration-300" />
-                </Button>
+                <a href="https://github.com/avi06nitp" target="_blank" rel="noopener noreferrer">
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all duration-300"
+                  >
+                    <Github className="w-4 h-4" />
+                  </Button>
+                </a>
 
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-110 hover:rotate-3"
-                >
-                  <Linkedin className="w-4 h-4" />
-                </Button>
-
-                <div className="ml-2 pl-2 border-l border-border/50">
-                  <ThemeToggle />
-                </div>
+                <a href="https://www.linkedin.com/in/avinash2001/" target="_blank" rel="noopener noreferrer">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="hover:bg-primary/10 hover:text-primary transition-all duration-300 hover:scale-110 hover:rotate-3"
+                  >
+                    <Linkedin className="w-4 h-4" />
+                  </Button>
+                </a>
               </div>
             </div>
 
             {/* Mobile Menu Button */}
             <div className="flex items-center space-x-2 md:hidden">
-              <ThemeToggle />
               <Button
                 variant="ghost"
                 size="icon"
@@ -193,29 +186,35 @@ export default function Header() {
                 ))}
 
                 <div className="pt-4 space-y-3 border-t border-border">
-                  <Button
-                    className="w-full justify-start hover:scale-105 transition-transform duration-300"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <Download className="w-4 h-4 mr-2" />
-                    Download Resume
-                  </Button>
+                  <a href="/AvinashS_Resume.pdf" download="AvinashS_Resume.pdf" className="block">
+                    <Button
+                      className="w-full justify-start hover:scale-105 transition-transform duration-300"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <Download className="w-4 h-4 mr-2" />
+                      Download Resume
+                    </Button>
+                  </a>
 
                   <div className="flex space-x-2">
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                    >
-                      <Github className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="icon"
-                      className="hover:bg-primary hover:text-primary-foreground transition-all duration-300"
-                    >
-                      <Linkedin className="w-4 h-4" />
-                    </Button>
+                    <a href="https://github.com/avi06nitp" target="_blank" rel="noopener noreferrer">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                      >
+                        <Github className="w-4 h-4" />
+                      </Button>
+                    </a>
+                    <a href="https://www.linkedin.com/in/avinash2001/" target="_blank" rel="noopener noreferrer">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        className="hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+                      >
+                        <Linkedin className="w-4 h-4" />
+                      </Button>
+                    </a>
                   </div>
                 </div>
               </nav>

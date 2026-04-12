@@ -1,4 +1,4 @@
-# Dependencies
+my emaiNow # Dependencies
 /node_modules
 /.pnp
 .pnp.*
@@ -24,7 +24,7 @@
 /dist
 
 # Debug
-npm-debug.log*
+npm-debug.log*all
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*

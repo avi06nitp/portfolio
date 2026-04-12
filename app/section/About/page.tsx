@@ -16,7 +16,7 @@ export default function About() {
               <div>
                 <h3 className="text-xl font-semibold mb-4 text-foreground">Career Trajectory</h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  My career trajectory is focused on evolving toward <b></b>senior/architect </b> roles with deep expertise
+                  My career trajectory is focused on evolving toward senior/architect roles with deep expertise
                   in designing large-scale distributed systems. I specialize in building high-performance,
                   reliable microservices architectures that handle millions of transactions daily.
                   My experience spans from hands-on development to system architecture, with a strong

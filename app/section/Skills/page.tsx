@@ -1,132 +1,167 @@
 "use client";
 
-import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/app/components/ui/card";
-import { Badge } from "@/app/components/ui/badge";
-import {
-  Code,
-  Database,
-  Server,
-  Zap,
-} from "lucide-react";
+import { Code, Network, Radio, Database, Cloud, ShieldCheck, Box, Webhook, Layers, Activity, Shield } from "lucide-react";
+
+const SKILL_ICONS: Record<string, React.ComponentType<{ className?: string }>> = {
+  "Microservices":        Box,
+  "Event-Driven Systems": Webhook,
+  "Distributed Caching":  Layers,
+  "High Availability":    Activity,
+  "Fault Tolerance":      Shield,
+};
+
+const AWS = "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-plain-wordmark.svg";
+const DATABRICKS = "https://cdn.simpleicons.org/databricks/FF3621";
+
+const SKILL_LOGOS: Record<string, string> = {
+  // Backend & Frameworks
+  "Java":           "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg",
+  "Python":         "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg",
+  "Spring Boot":    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg",
+  "Spring WebFlux": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/spring/spring-original.svg",
+  // Messaging & Streaming
+  "Apache Kafka": "https://cdn.simpleicons.org/apachekafka/ffffff",
+  "RabbitMQ":     "https://cdn.simpleicons.org/rabbitmq/FF6600",
+  "AWS SNS":      AWS,
+  "AWS SQS":      AWS,
+  // Databases & Caching
+  "MySQL":         "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg",
+  "PostgreSQL":    "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg",
+  "Redis":         "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg",
+  "Elasticsearch": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/elasticsearch/elasticsearch-original.svg",
+  // Cloud & Data Platforms — AWS
+  "AWS EC2":       AWS,
+  "ECS/EKS":       AWS,
+  "S3":            AWS,
+  "Lambda":        AWS,
+  "EventBridge":   AWS,
+  "CloudWatch":    AWS,
+  "Lake Formation":AWS,
+  "Glue":          AWS,
+  "Athena":        AWS,
+  // Cloud & Data Platforms — Databricks
+  "Databricks Unity Catalog": DATABRICKS,
+  "Delta Lake":               DATABRICKS,
+  "Delta Live Tables":        DATABRICKS,
+  "Lakehouse Federation":     DATABRICKS,
+  // DevOps & Security
+  "Linux":          "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg",
+  "Git":            "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg",
+  "Docker":         "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg",
+  "Kubernetes":     "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/kubernetes/kubernetes-original.svg",
+  "Jenkins":        "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jenkins/jenkins-original.svg",
+  "GitHub Actions": "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/github/github-original.svg",
+  "SonarQube":      "https://cdn.simpleicons.org/sonarqube/4E9BCD",
+};
 
 const SKILLS_CATEGORIES = [
   {
-    title: "Languages",
+    title: "Backend & Frameworks",
     icon: Code,
-    skills: ["C++", "Java", "Python", "JavaScript"],
-    color: "from-blue-400 to-cyan-500",
-    description: "Core programming languages"
+    iconColor: "text-blue-400",
+    skills: ["Java", "Python", "Spring Boot", "Spring WebFlux"],
+    description: "Core languages and backend frameworks"
   },
   {
-    title: "Frameworks",
-    icon: Server,
-    skills: ["Spring Boot", "FastAPI", "React", "Next.js"],
-    color: "from-blue-500 to-blue-600",
-    description: "Full-stack development frameworks"
+    title: "Architecture & Design",
+    icon: Network,
+    iconColor: "text-slate-300",
+    skills: ["Microservices", "Event-Driven Systems", "Distributed Caching", "High Availability", "Fault Tolerance"],
+    description: "System design and distributed architecture"
   },
   {
-    title: "Databases",
+    title: "Messaging & Streaming",
+    icon: Radio,
+    iconColor: "text-green-400",
+    skills: ["Apache Kafka", "RabbitMQ", "AWS SNS", "AWS SQS"],
+    description: "Async messaging and event streaming"
+  },
+  {
+    title: "Databases & Caching",
     icon: Database,
-    skills: ["MySQL", "PostgreSQL", "NoSQL", "Redis"],
-    color: "from-purple-400 to-pink-500",
-    description: "Data storage and management"
+    iconColor: "text-purple-400",
+    skills: ["MySQL", "PostgreSQL", "Redis", "Memcached", "Elasticsearch"],
+    description: "Data storage, caching, and search"
   },
   {
-    title: "DevOps & Tools",
-    icon: Zap,
-    skills: ["Jenkins", "Docker", "Kubernetes", "Terraform"],
-    color: "from-yellow-400 to-orange-500",
-    description: "Infrastructure and deployment"
+    title: "Cloud & Data Platforms",
+    icon: Cloud,
+    iconColor: "text-orange-400",
+    skills: [
+      "AWS EC2", "ECS/EKS", "S3", "Lambda", "EventBridge", "CloudWatch",
+      "Lake Formation", "Glue", "Athena",
+      "Databricks Unity Catalog", "Delta Lake", "Delta Live Tables", "Lakehouse Federation"
+    ],
+    description: "AWS services and Databricks ecosystem"
+  },
+  {
+    title: "DevOps & Security",
+    icon: ShieldCheck,
+    iconColor: "text-rose-400",
+    skills: ["Linux", "Git", "Docker", "Kubernetes", "Jenkins", "GitHub Actions", "SonarQube", "Checkmarx", "Sonatype"],
+    description: "CI/CD, containerization, and SAST/SCA"
   }
 ];
 
-const SPECIALIZATIONS = [
-  "RabbitMQ", "Apache Kafka", "Redis", "CDN Optimization", "MCP Servers",
-  "High-Frequency Trading", "Microservices", "System Architecture", "Performance Tuning"
-];
-
 export default function Skills() {
-  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
-
   return (
     <section id="skills" className="py-20 px-4 bg-muted/50">
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-6 text-black dark:text-white">
+          <h2 className="text-5xl font-bold mb-6 text-foreground">
             Skills & Technologies
           </h2>
-          <p className="text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-            Building tomorrow's systems with today's cutting-edge technologies.
-            Specialized in high-performance, scalable architectures.
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Building reliable, high-performance distributed systems with a focus on scalability and security.
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-          {SKILLS_CATEGORIES.map((category, index) => {
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {SKILLS_CATEGORIES.map((category) => {
             const IconComponent = category.icon;
             return (
-                <Card
-                    key={category.title}
-                    className="group relative overflow-hidden backdrop-blur-sm border transition-all duration-500 hover:scale-105 hover:shadow-xl"
-                    onMouseEnter={() => setHoveredCard(index)}
-                    onMouseLeave={() => setHoveredCard(null)}
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                >
-
-                  <CardHeader className="relative">
-                    <CardTitle className="flex items-center gap-3 text-xl">
-                      <div className={`p-2 rounded-lg bg-gradient-to-r ${category.color} group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
-                        <IconComponent className="w-6 h-6 text-white" />
-                      </div>
-                      {category.title}
-                    </CardTitle>
-                    <CardDescription>
-                      {category.description}
-                    </CardDescription>
-                  </CardHeader>
-
-                  <CardContent className="relative">
-                    <div className="flex flex-wrap gap-2">
-                      {category.skills.map((skill, skillIndex) => (
-                          <Badge
-                              key={skill}
-                              className={`bg-gradient-to-r ${category.color} hover:scale-105 text-white transition-all duration-300 hover:shadow-lg`}
-                              style={{ animationDelay: `${skillIndex * 0.05}s` }}
-                          >
-                            {skill}
-                          </Badge>
-                      ))}
+              <Card key={category.title} className="hover:shadow-md transition-shadow duration-300">
+                <CardHeader className="pb-3">
+                  <CardTitle className="flex items-center gap-3 text-base font-bold">
+                    <div className="p-2 rounded-lg bg-secondary">
+                      <IconComponent className={`w-4 h-4 ${category.iconColor}`} />
                     </div>
-                  </CardContent>
-
-                </Card>
+                    {category.title}
+                  </CardTitle>
+                  <CardDescription className="text-xs">{category.description}</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="flex flex-wrap gap-2">
+                    {category.skills.map((skill) => {
+                      const logo = SKILL_LOGOS[skill];
+                      const LucideIcon = SKILL_ICONS[skill];
+                      return (
+                        <span
+                          key={skill}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-secondary text-xs text-secondary-foreground border border-border/40"
+                        >
+                          {logo && (
+                            <img
+                              src={logo}
+                              alt={skill}
+                              className="w-3.5 h-3.5 object-contain flex-shrink-0"
+                              loading="lazy"
+                            />
+                          )}
+                          {!logo && LucideIcon && (
+                            <LucideIcon className="w-3.5 h-3.5 flex-shrink-0 text-muted-foreground" />
+                          )}
+                          {skill}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
         </div>
-
-        <Card className="group hover:shadow-lg transition-shadow relative overflow-hidden">
-
-          <CardHeader className="relative">
-            <CardTitle className="text-center text-xl bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">Specializations</CardTitle>
-            <CardDescription className="text-center">
-              Advanced expertise in cutting-edge technologies
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="relative">
-            <div className="flex flex-wrap justify-center gap-3">
-              {SPECIALIZATIONS.map((spec, specIndex) => (
-                <Badge
-                  key={spec}
-                  className="bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 text-white hover:scale-105 transition-all duration-300 hover:shadow-lg"
-                  style={{ animationDelay: `${specIndex * 0.05}s` }}
-                >
-                  {spec}
-                </Badge>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
       </div>
     </section>
   );
